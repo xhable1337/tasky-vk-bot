@@ -19,20 +19,12 @@ bot = Bot(token=CONSTANTS['BOT_TOKEN'])
 api = API(token=CONSTANTS['API_TOKEN'])
 
 
-@bot.on.message(CONSTANTS['GREETING_RULE'])
-async def greeting_handler(message: Message):
-    """Хэндлер приветствия"""
-    users = await bot.api.users.get(message.from_id)
-    first_name = users[0].first_name
-    await message.answer(f"Привет, {first_name}!\nСписок команд: /help /помощь", keyboard=keyboard)
-
-
 @bot.on.message(command="помощь")
 @bot.on.message(command="help")
 @bot.on.message(payload={"cmd": "help"})
 async def help_handler(message: Message):
     """Хэндлер команды /помощь (/help)"""
-    await message.answer(MSG['HELP_TEXT'])
+    await message.answer(MSG['help'])
 
 
 @bot.on.message(command="автор")
@@ -202,8 +194,10 @@ async def file_handler(message: Message, args: Tuple[str] = None):
 
 @bot.on.message()
 async def all_handler(message: Message):
-    """Хэндлер обработки всех остальных сообщений"""
-    # Делаем вид, что с нами поздоровался пользователь
-    greeting_handler(message)
+    """Хэндлер обработки всех остальных сообщений и приветствия"""
+    """Хэндлер приветствия"""
+    users = await bot.api.users.get(message.from_id)
+    first_name = users[0].first_name
+    await message.answer(f"Привет, {first_name}!\nСписок команд: /help /помощь", keyboard=keyboard)
 
 bot.run_forever()
