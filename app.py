@@ -4,7 +4,6 @@ import random
 
 from vkbottle import API, DocMessagesUploader
 from vkbottle.bot import Bot, Message
-from vkbottle.dispatch.rules import ABCRule
 from vkbottle.dispatch.rules.base import CommandRule
 
 from keyboards import keyboard
